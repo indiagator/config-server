@@ -71,6 +71,39 @@ services:
       - "8082:8082"
     networks:
       - backend
+  test-service-4:
+    image: indiagator/test-service-4:0.3
+    environment:
+      PROFILE: "default"
+      CONFIGSERVER_URI: "http://config-server:8071"
+      CONFIGSERVER_PORT: "8071"
+      DATABASESERVER_PORT: "5432"
+    depends_on:
+      config-server:
+        condition: service_started
+      eureka-server:
+        condition: service_started
+    ports:
+      - "8086:8085"
+    networks:
+      - backend
+  gateway-server:
+    image: indiagator/gateway-server:0.1
+    environment:
+      PROFILE: "default"
+      CONFIGSERVER_URI: "http://config-server:8071"
+      CONFIGSERVER_PORT: "8071"
+      DATABASESERVER_PORT: "5432"
+    depends_on:
+      config-server:
+        condition: service_started
+      eureka-server:
+        condition: service_started
+    ports:
+      - "8072:8072"
+    networks:
+      - backend
+
 networks:
   backend:
     driver: bridge
