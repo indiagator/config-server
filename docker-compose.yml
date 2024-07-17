@@ -1,4 +1,5 @@
-version: '2.1'
+version: '3.7'
+
 services:
   config-server:
     image: indiagator/config-server:0.1
@@ -23,70 +24,7 @@ services:
       backend:
         aliases:
           - "eureka-server"
-  test-service-1:
-    image: indiagator/test-service-1-image-fresh:0.5
-    environment:
-      PROFILE: "default"
-      CONFIGSERVER_URI: "http://config-server:8071"
-      CONFIGSERVER_PORT:   "8071"
-      DATABASESERVER_PORT: "5432"
-    depends_on:
-      config-server:
-        condition: service_started
-      eureka-server:
-        condition: service_started
-    ports:
-      - "8080:8080"
-    networks:
-      - backend
-  test-service-2:
-    image: indiagator/test-service-2-image-fresh:0.4
-    environment:
-      PROFILE: "default"
-      CONFIGSERVER_URI: "http://config-server:8071"
-      CONFIGSERVER_PORT: "8071"
-      DATABASESERVER_PORT: "5432"
-    depends_on:
-      config-server:
-        condition: service_started
-      eureka-server:
-        condition: service_started
-    ports:
-      - "8081:8081"
-    networks:
-      - backend
-  test-service-3:
-    image: indiagator/test-service-3-image-fresh:0.4
-    environment:
-      PROFILE: "default"
-      CONFIGSERVER_URI: "http://config-server:8071"
-      CONFIGSERVER_PORT: "8071"
-      DATABASESERVER_PORT: "5432"
-    depends_on:
-      config-server:
-        condition: service_started
-      eureka-server:
-        condition: service_started
-    ports:
-      - "8082:8082"
-    networks:
-      - backend
-  test-service-4:
-    image: indiagator/test-service-4:0.3
-    environment:
-      PROFILE: "default"
-      CONFIGSERVER_URI: "http://config-server:8071"
-      CONFIGSERVER_PORT: "8071"
-      DATABASESERVER_PORT: "5432"
-    depends_on:
-      config-server:
-        condition: service_started
-      eureka-server:
-        condition: service_started
-    ports:
-      - "8086:8085"
-    networks:
-      - backend
+
   gateway-server:
     image: indiagator/gateway-server:0.1
     environment:
